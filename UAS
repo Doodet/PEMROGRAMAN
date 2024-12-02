@@ -1,0 +1,176 @@
+1. a. MENGHITUNG BESAR GAYA PADA PEGAS
+# Konstanta pegas
+k = 60  # N/m
+
+# Rentang posisi
+x = np.arange(0, 0.5 + 0.02, 0.02)  # Dari 0 hingga 0.5 dengan langkah 0.02
+
+# Menghitung gaya menggunakan hukum Hooke: F = -kx
+gaya = -k * x
+
+# Menampilkan hasil
+for i in range(len(x)):
+    print(f"Posisi x = {x[i]:.2f} m, Gaya F = {gaya[i]:.2f} N")
+
+  b. VISUALISASI GRAFIK
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Konstanta pegas
+k = 60  # N/m
+
+# Posisi bertahap
+x = np.arange(0, 0.5 + 0.02, 0.02)  # Dari 0 hingga 0.5 dengan langkah 0.02
+
+# Rumus hukum Hooke: F = -kx
+gaya = -k * x
+
+# Membuat plot
+plt.plot(x, gaya, marker='o', linestyle='-')
+
+# Memberi label sumbu
+plt.xlabel('Posisi (x)')
+plt.ylabel('Gaya (F)')
+
+# Memberi judul plot
+plt.title('Grafik Gaya F(x) terhadap Posisi x')
+
+# Menampilkan grid
+plt.grid(True)
+
+# Menampilkan plot
+plt.show()
+
+
+2. POSISI BENDA PADA FUNGSI WAKTU
+import numpy as np
+
+def position(t):
+  return 5 * np.cos(np.pi * t / 5)
+
+time = np.arange(0, 51, 1)
+positions = position(time)
+
+for t, x in zip(time, positions):
+  print(f"Waktu: {t} detik, Posisi: {x:.2f} cm")
+
+
+   VISUALISASI GRAFIK
+import numpy as np
+import matplotlib.pyplot as plt
+
+#definisipersamaan gerak
+def posisi(waktu):
+  return 5 * np.cos(np.pi * waktu / 5)
+
+#waktu dari 0 hingga 50 detik
+waktu = np.arange(0, 51, 1)
+
+# Menghitung posisi benda pada setiap titik waktu
+posisi_benda = posisi(waktu)
+
+# Membuat plot
+plt.plot(waktu, posisi_benda)
+plt.title('Grafik Posisi terhadap Waktu')
+plt.xlabel('Waktu (detik)')
+plt.ylabel('Posisi (cm)')
+plt.grid(True)
+plt.show()
+
+
+3. GAMBAR GRAFIK BENDANYA SAMPAI KEMBALI KE POSISI AWAL
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Kecepatan awal (m/s)
+v0 = 50
+
+# Percepatan gravitasi (m/s^2)
+g = 9.81
+
+# Waktu total (s) dihitung sampai benda kembali ke posisi awal
+t_total = 2 * v0 / g
+
+# Jumlah titik data untuk grafik
+num_points = 100
+
+# Membuat array waktu
+t = np.linspace(0, t_total, num_points)
+
+# Menghitung ketinggian (y) pada setiap waktu
+y = v0 * t - 0.5 * g * t**2
+
+# Membuat grafik
+plt.plot(t, y)
+plt.title('Gerak Benda yang Dilempar Vertikal ke Atas')
+plt.xlabel('Waktu (s)')
+plt.ylabel('Ketinggian (m)')
+plt.grid()
+plt.show()
+
+4. PROGRAM PERSOALAN TERSEBUT
+import scipy.integrate as integrate  # Mengimpor library untuk integrasi
+
+# Definisikan fungsi untuk gaya
+def gaya(x):
+  """
+  Fungsi ini menghitung gaya pada posisi x.
+
+  Args:
+    x: Posisi benda dalam meter.
+
+  Returns:
+    Gaya yang bekerja pada benda dalam Newton.
+  """
+  return 2 * x**2 + 4 * x + 2
+
+# Batas perpindahan benda
+x_awal = 0  # Posisi awal (meter)
+x_akhir = 30  # Posisi akhir (meter)
+
+# Hitung usaha menggunakan integrasi numerik
+usaha, error = integrate.quad(gaya, x_awal, x_akhir)
+
+# Cetak hasil
+print(f"Usaha yang dilakukan: {usaha} Joule")
+
+VISUALISASI GRAFIK
+import scipy.integrate as integrate
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Definisikan fungsi untuk gaya
+def gaya(x):
+  return 2 * x**2 + 4 * x + 2
+
+# Batas perpindahan benda
+x_awal = 0
+x_akhir = 30
+
+# Hitung usaha
+usaha, error = integrate.quad(gaya, x_awal, x_akhir)
+
+# --- Visualisasi ---
+# Buat array nilai x untuk plotting
+x_values = np.linspace(x_awal, x_akhir, 100)  # 100 titik data
+
+# Hitung nilai gaya untuk setiap x
+gaya_values = gaya(x_values)
+
+# Buat plot gaya terhadap posisi
+plt.figure(figsize=(8, 6))  # Ukuran plot
+plt.plot(x_values, gaya_values, label='Gaya (N)')
+plt.xlabel('Posisi (m)')
+plt.ylabel('Gaya (N)')
+plt.title('Gaya terhadap Posisi')
+plt.grid(True)
+plt.legend()
+
+# Tampilkan area di bawah kurva (usaha)
+plt.fill_between(x_values, gaya_values, 0, alpha=0.3, color='skyblue', label='Usaha')
+
+# Tampilkan teks usaha
+plt.text(x_akhir / 2, gaya(x_akhir / 2) / 2, f'Usaha = {usaha:.2f} J', color='black', fontsize=12)
+
+plt.legend()
+plt.show()
